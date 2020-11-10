@@ -1,8 +1,9 @@
-import { React, useState } from "react";
-import {useHistory} from 'react-router-dom';
+import { React, useState ,useEffect} from "react";
+import {useHistory,useParams} from 'react-router-dom';
 import axios from "axios";
-const AddUser =()=>{
+const EditUser =()=>{
     let history = useHistory();
+    const {id} = useParams();
     const [user,setUser] =useState({
         name:"",
         username:"",
@@ -15,18 +16,29 @@ const AddUser =()=>{
     const onInputChange=(e)=>{
         setUser({...user, [e.target.name]:e.target.value})
     }
+    useEffect(()=>{
+    loadUser();
+    },[])
     const onSubmit=async (e)=>{
         e.preventDefault(); 
-        await axios.post("http://localhost:3003/users",user);
+        await axios.put(`http://localhost:3003/users/${id}`,user);
         history.push("/")
         
 
+    }
+    useEffect(()=>{
+        loadUser();
+    })
+    const loadUser =async()=>{
+        const result =await axios.get(`http://localhost:3003/users/${id}`)
+       // console.log(result)
+      setUser(result.data);
     }
     return(
         
         <div className="container"> 
         <div className="w-75 mx-auto shadow p-5 ">
-        <h1 className="text-center mb-4">Add A User</h1>
+        <h1 className="text-center mb-4">Edit A User</h1>
         <form onSubmit={e=>onSubmit(e)}>
         <div className="form-group">
          <input
@@ -82,11 +94,11 @@ const AddUser =()=>{
          />
      </div>
   
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <button type="submit" className="btn btn-primary">Update User</button>
 </form>
         </div></div>
     )
 }
 
 
-export default AddUser;
+export default EditUser;
