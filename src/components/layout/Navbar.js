@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom'
 const Navbar =()=>{
   return(<nav className="navbar navbar-expand-lg navbar-light bg-light">
   <div className="container">
-  <a className="navbar-brand" href="#">Navbar</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -20,8 +19,11 @@ const Navbar =()=>{
       <li className="nav-item">
         <NavLink className="nav-link" exact to="/contact">Contact</NavLink>
       </li>
+
      </ul>
-    </div></div>
+    </div>
+    <NavLink className="btn btn-outline-dark" to="/users/add">Add User</NavLink>
+    </div>
 </nav>
   )
 
